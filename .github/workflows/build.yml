@@ -2,9 +2,6 @@ name: Build
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -21,8 +18,8 @@ jobs:
       - name: Build
         run: dotnet build -c Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: koenhagen/measure-energy-action@v0.33
         with:
-          token: ${{ secrets.CODE_COV_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+          count: 1
